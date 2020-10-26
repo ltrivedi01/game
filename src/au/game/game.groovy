@@ -1,18 +1,23 @@
-package au.game
+package au.game.helper
 
-def numberOfPlayer
+import au.game.helper.helperFunctions
+
+numberOfPlayer
 def listOfPlayerScore = []
 def scoreHighestRank
 def playerScore
 
-//numberOfPlayer = getUserInput("Enter number of players:")
+helperFunctions = new helperFunctions()
 
-listOfPlayerScore = Eval.me(getUserInput("Enter list of players score [x,x,]:"))
 
-scoreHighestRank = getUserInput("Enter highest selection of score:").toInteger()
+listOfPlayerScore = Eval.me(helperFunctions.getUserInput("Enter list of players score [x,x,]:"))
+
+scoreHighestRank = helperFunctions.getUserInput("Enter highest selection of rank based on score:").toInteger()
 
 playerScore = sortPlayers(listOfPlayerScore, scoreHighestRank)
 
+
+//Function to get User Input
 static getUserInput(def text) {
     println text
 
@@ -22,17 +27,48 @@ static getUserInput(def text) {
     return UserInput
 }
 
-static sortPlayers(listOfPlayerScore, def highersScore) {
+//Function to sort players
+static sortPlayers(listOfPlayerScore, def scoreHighestRank) {
+    //Sort the player
+    def sortPlayer = listOfPlayerScore.sort()
+    println("Sorted player:" + sortPlayer)
+
+    //Rank the player
+    def listOfPlayersRank = rankPlayers(sortPlayer)
+
+    //Count number of selected players based on highest rank
+    def numberOfSelectedPlayers = getNumberOfSelectedPlayers(listOfPlayersRank, scoreHighestRank)
+    println("Number of selected players based on score highest rank: " + numberOfSelectedPlayers)
+}
+
+static rankPlayers(sortPlayer) {
+    //Rank the player
+    def listOfPlayersRank = []
+    def rank = 1
+    def previousItem = sortPlayer.get(0)
+    for (item in sortPlayer) {
+        if (item == previousItem) {
+            listOfPlayersRank.add(rank)
+        } else {
+            listOfPlayersRank.add(rank + 1)
+            rank++
+        }
+        previousItem = item
+
+    }
+    return listOfPlayersRank
+    println("List of players ranks:" + listOfPlayersRank)
+}
+
+static getNumberOfSelectedPlayers(listOfPlayersRank, scoreHighestRank) {
     def numberOfSelectedPlayer = 0
-    for (item in listOfPlayerScore){
-        if (item < highersScore){
+    for (item in listOfPlayersRank) {
+        if (item <= scoreHighestRank) {
             numberOfSelectedPlayer = numberOfSelectedPlayer + 1
         }
     }
-    println("Number of selected players: " + numberOfSelectedPlayer)
-
+    println("Number of selected players based on score highest rank: " + numberOfSelectedPlayer)
 }
-
 
 
 
