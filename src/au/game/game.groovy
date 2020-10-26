@@ -1,20 +1,15 @@
-package au.game.helper
-
 import au.game.helper.helperFunctions
 
-numberOfPlayer
-def listOfPlayerScore = []
-def scoreHighestRank
-def playerScore
-
-helperFunctions = new helperFunctions()
+//def listOfPlayerScore = []
+//def scoreHighestRank
+//def playerScore
 
 
-listOfPlayerScore = Eval.me(helperFunctions.getUserInput("Enter list of players score [x,x,]:"))
+def listOfPlayerScore = Eval.me(getUserInput("Enter list of players score [x,x,]:"))
 
-scoreHighestRank = helperFunctions.getUserInput("Enter highest selection of rank based on score:").toInteger()
+def scoreHighestRank = getUserInput("Enter highest selection of rank based on score:").toInteger()
 
-playerScore = sortPlayers(listOfPlayerScore, scoreHighestRank)
+def playerScore = sortPlayers(listOfPlayerScore, scoreHighestRank)
 
 
 //Function to get User Input
@@ -35,6 +30,7 @@ static sortPlayers(listOfPlayerScore, def scoreHighestRank) {
 
     //Rank the player
     def listOfPlayersRank = rankPlayers(sortPlayer)
+    println("List of players rank:" + listOfPlayersRank)
 
     //Count number of selected players based on highest rank
     def numberOfSelectedPlayers = getNumberOfSelectedPlayers(listOfPlayersRank, scoreHighestRank)
@@ -57,7 +53,7 @@ static rankPlayers(sortPlayer) {
 
     }
     return listOfPlayersRank
-    println("List of players ranks:" + listOfPlayersRank)
+
 }
 
 static getNumberOfSelectedPlayers(listOfPlayersRank, scoreHighestRank) {
@@ -67,7 +63,7 @@ static getNumberOfSelectedPlayers(listOfPlayersRank, scoreHighestRank) {
             numberOfSelectedPlayer = numberOfSelectedPlayer + 1
         }
     }
-    println("Number of selected players based on score highest rank: " + numberOfSelectedPlayer)
+    return numberOfSelectedPlayer
 }
 
 
